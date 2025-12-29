@@ -1,62 +1,79 @@
 import streamlit as st
 import urllib.parse
 
-# Configuração da página e Estilo Villa Terra
-st.set_page_config(page_title="Kelvin Eiyng - Consultor Imobiliário", page_icon="🏠")
+# Configuração e Identidade Visual Villa Terra
+st.set_page_config(page_title="Kelvin Eiyng - Villa Terra", page_icon="🏠")
 
+# CSS para mudar as cores para um tom azul escuro e dourado (profissional)
 st.markdown("""
     <style>
-    .main { background-color: #f5f5f5; }
-    .stButton>button { width: 100%; background-color: #1d3557; color: white; border-radius: 10px; height: 3em; }
-    .stTextInput>div>div>input { border-radius: 10px; }
+    .stApp { background-color: #ffffff; }
+    .stButton>button { width: 100%; background-color: #0c2461; color: white; border-radius: 8px; font-weight: bold; }
+    .stTabs [data-baseweb="tab-list"] { gap: 8px; }
+    .stTabs [data-baseweb="tab"] { background-color: #f1f2f6; border-radius: 5px 5px 0px 0px; padding: 10px; }
+    .instruction { font-size: 0.85rem; color: #636e72; font-style: italic; }
     </style>
     """, unsafe_allow_html=True)
 
-# Cabeçalho com Autoridade
-st.title("💼 Central de Vendas - Kelvin Eiyng")
-st.caption("Parceiro Imobiliário Villa Terra | CRECI-SC 49891 F")
+# Título e Logo
+st.title("🏠 Central do Corretor")
+st.subheader("Kelvin Eiyng | CRECI-SC 49891 F")
+st.markdown("---")
 
-aba1, aba2 = st.tabs(["🚀 Respostas Rápidas", "🧮 Simulador de Parcelas"])
+aba1, aba2 = st.tabs(["💬 Mensagens Isca", "📊 Simulador de Venda"])
 
 with aba1:
-    st.subheader("Gatilhos de Conversa (Curtos)")
-    nome_cliente = st.text_input("Nome do Lead")
-    fone_cliente = st.text_input("WhatsApp do Lead (ex: 48984610091)")
+    st.markdown("### 🚀 Enviar Mensagem Rápida")
+    st.markdown('<p class="instruction">Use estas frases curtas para fazer o cliente responder mais rápido.</p>', unsafe_allow_html=True)
     
-    msg_tipo = st.selectbox("O que enviar?", [
-        "Isca 1: Pergunta sobre Vídeo",
-        "Isca 2: Agendar Visita",
-        "Isca 3: Follow-up (Retorno)"
+    nome_cliente = st.text_input("Nome do Cliente", placeholder="Ex: João")
+    fone_cliente = st.text_input("WhatsApp com DDD", placeholder="Ex: 48984610091")
+    
+    st.markdown('<p class="instruction">Escolha o objetivo da conversa:</p>', unsafe_allow_html=True)
+    msg_tipo = st.selectbox("", [
+        "Saber se quer ver o vídeo do imóvel",
+        "Convidar para visita amanhã",
+        "Retomar contato (Follow-up)"
     ])
 
     textos = {
-        "Isca 1: Pergunta sobre Vídeo": f"Oi {nome_cliente}, vi seu interesse no imóvel. Você quer que eu te mande o vídeo completo dele por aqui?",
-        "Isca 2: Agendar Visita": f"Fala {nome_cliente}! Gostou das fotos? Tenho um horário livre para te mostrar ele amanhã. Qual horário fica melhor para você?",
-        "Isca 3: Follow-up (Retorno)": f"Oi {nome_cliente}, tudo bem? Só passando para saber se ainda tem interesse naquele imóvel ou se quer que eu te mande outras opções no mesmo perfil."
+        "Saber se quer ver o vídeo do imóvel": f"Oi {nome_cliente}, vi seu interesse no imóvel. Quer que eu te mande o vídeo completo dele agora?",
+        "Convidar para visita amanhã": f"Fala {nome_cliente}! Gostou das fotos? Tenho um horário livre amanhã. Que horas fica bom para você ver o imóvel?",
+        "Retomar contato (Follow-up)": f"Oi {nome_cliente}, tudo bem? Só passando para saber se ainda tem interesse ou se quer outras opções no mesmo perfil."
     }
     
     msg_final = textos[msg_tipo]
-    st.info(msg_final)
+    st.code(msg_final, language=None)
 
-    if st.button("Enviar para o WhatsApp"):
+    if st.button("🚀 ENVIAR PELO WHATSAPP"):
         if fone_cliente:
             texto_url = urllib.parse.quote(msg_final)
             link = f"https://wa.me/55{fone_cliente}?text={texto_url}"
-            st.markdown(f'<a href="{link}" target="_blank">Abrir conversa agora</a>', unsafe_allow_html=True)
+            st.markdown(f'<a href="{link}" target="_blank" style="text-decoration:none;"><button style="width:100%; background-color:#25d366; color:white; border:none; padding:10px; border-radius:8px; cursor:pointer;">Confirmar e Abrir WhatsApp</button></a>', unsafe_allow_html=True)
         else:
-            st.error("Coloque o número do cliente!")
+            st.error("Por favor, digite o número do cliente.")
 
 with aba2:
-    st.subheader("Simulação Rápida (Para usar na visita)")
-    valor_imovel = st.number_input("Valor do Imóvel (R$)", value=300000)
-    entrada = st.number_input("Entrada (R$)", value=60000)
-    prazo_anos = st.slider("Prazo (Anos)", 10, 35, 30)
+    st.markdown("### 🧮 Simulação para o Cliente")
+    st.markdown('<p class="instruction">Use isto durante a visita para dar uma estimativa de parcelas.</p>', unsafe_allow_html=True)
     
-    saldo = valor_imovel - entrada
-    parcela_aprox = (saldo / (prazo_anos * 12)) * 1.6 # Estimativa com juros médios
+    v_imovel = st.number_input("Valor do Imóvel (R$)", value=350000, step=50000)
+    v_entrada = st.number_input("Entrada disponível (R$)", value=70000, step=10000)
     
-    st.metric("Parcela Estimada (Médio)", f"R$ {parcela_aprox:,.2f}")
-    st.warning("Atenção: Valores aproximados para base de negociação.")
+    saldo = v_imovel - v_entrada
+    st.write(f"**Valor a financiar:** R$ {saldo:,.2f}")
+    
+    prazo = st.select_slider("Prazo (Anos)", options=[10, 15, 20, 25, 30, 35], value=30)
+    
+    # Cálculo simples de prestação (Price aproximada)
+    juros = 0.009 # Aprox 10.5% ao ano
+    n = prazo * 12
+    parcela = saldo * ( (juros * (1 + juros)**n) / ((1 + juros)**n - 1) )
+    
+    st.metric("Parcela Estimada", f"R$ {parcela:,.2f}")
+    st.markdown('<p class="instruction">*Valores baseados em taxas médias de mercado. Sujeito a análise bancária.</p>', unsafe_allow_html=True)
 
-st.divider()
-st.write("Dica: Adicione este site à tela inicial do seu celular para usar como um App!")
+st.markdown("---")
+st.caption("Sistema desenvolvido para Kelvin Eiyng - Villa Terra")
+   
+            
