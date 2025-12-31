@@ -1,1 +1,1 @@
-Add project case (README)
+Update README with full project case
