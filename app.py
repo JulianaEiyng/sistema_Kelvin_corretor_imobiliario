@@ -4,20 +4,20 @@ import numpy as np
 import plotly.graph_objects as go
 
 # 1. Configuração de Estilo Profissional (CSS)
-st.set_page_config(page_title="Sistema Kelvin | Inteligência Imobiliária", layout="centered")
+st.set_page_config(page_title="Kelvin Eiyng", layout="centered")
 
 st.markdown("""
     <style>
     .stApp { background-color: #f8f9fa; }
-    .header-blue { background-color: #1e56a0; color: white; padding: 20px; border-radius: 5px; text-align: center; margin-bottom: 25px; font-weight: bold; font-size: 22px; }
+    .header-blue { background-color: #1e56a0; color: white; padding: 20px; border-radius: 5px; text-align: center; margin-bottom: 25px; font-weight: bold; font-size: 20px; }
     .card-agenda { background: white; border-radius: 12px; padding: 18px; margin-bottom: 12px; border-left: 10px solid; box-shadow: 0px 4px 6px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
     .btn-whatsapp { background-color: #000000; color: white !important; text-align: center; padding: 15px; border-radius: 30px; font-weight: bold; text-decoration: none; display: block; margin-top: 20px; }
     .tag-status { font-weight: bold; font-size: 11px; text-transform: uppercase; }
     </style>
     """, unsafe_allow_html=True)
 
-# 2. Cabeçalho
-st.markdown('<div class="header-blue">🏠 Sistema Kelvin | Inteligência Imobiliária</div>', unsafe_allow_html=True)
+# 2. Cabeçalho Atualizado (Sem "Inteligência Imobiliária")
+st.markdown('<div class="header-blue">🏠 Kelvin Eiyng | CRECI-SC: 49891 F</div>', unsafe_allow_html=True)
 
 # 3. Abas
 tab1, tab2, tab3 = st.tabs(["📊 Simulador", "🚀 Atendimento", "🗓️ Minha Agenda"])
@@ -54,7 +54,6 @@ with tab2:
 with tab3:
     st.markdown("### 🗓️ Minha Agenda")
     
-    # Agenda idêntica à imagem
     st.markdown("""
     <div class="card-agenda" style="border-left-color: #ff4b4b;">
         <div><b>14:49 - João Silva</b><br><span class="tag-status" style="color: #ff4b4b;">● URGENTE</span></div>
@@ -71,4 +70,4 @@ with tab3:
     """, unsafe_allow_html=True)
 
 st.write("---")
-st.caption("Kelvin Eiyng | CRECI-SC: 49891 F")
+st.caption("Central do Corretor | Profissionalismo e Agilidade")
