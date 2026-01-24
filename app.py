@@ -26,8 +26,7 @@ with t1:
     jur = st.number_input("Juros %", value=10.5)
     pra = st.slider("Anos", 1, 35, 20)
     k = KelvinSistema(val, jur, pra)
-    res = k.calcular()
-    st.metric("Parcela", f"R$ {res:,.2f}")
+    st.metric("Parcela", f"R$ {k.calcular():,.2f}")
 
 with t2:
     cli = st.text_input("Cliente:")
@@ -38,8 +37,7 @@ with t2:
 
 with t3:
     nome = st.text_input("Lead:")
-    hora = st.time_input("Hora:")
     if st.button("Salvar"):
-        st.session_state.agenda.append({"n": nome, "h": hora})
+        st.session_state.agenda.append(nome)
     for i in st.session_state.agenda:
-        st.write(f"⏰ {i['h']} - {i['n']}")
+        st.write(f"✅ {i}")
