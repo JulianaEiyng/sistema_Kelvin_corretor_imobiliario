@@ -1,79 +1,105 @@
 import streamlit as st
-import urllib.parse
+import pandas as pd
+from datetime import datetime
 
-# Configuração e Identidade Visual Villa Terra
-st.set_page_config(page_title="Kelvin Eiyng - Villa Terra", page_icon="🏠")
+# Estrutura principal do sistema de cálculos financeiros
+class KelvinSistema:
+    def __init__(self, valor, juros, prazo):
+        self.valor = valor
+        self.taxa_mensal = (juros / 100) / 12
+        self.total_meses = prazo * 12
 
-# CSS para mudar as cores para um tom azul escuro e dourado (profissional)
-st.markdown("""
-    <style>
-    .stApp { background-color: #ffffff; }
-    .stButton>button { width: 100%; background-color: #0c2461; color: white; border-radius: 8px; font-weight: bold; }
-    .stTabs [data-baseweb="tab-list"] { gap: 8px; }
-    .stTabs [data-baseweb="tab"] { background-color: #f1f2f6; border-radius: 5px 5px 0px 0px; padding: 10px; }
-    .instruction { font-size: 0.85rem; color: #636e72; font-style: italic; }
-    </style>
-    """, unsafe_allow_html=True)
+    def calcular_parcela(self):
+        i, n = self.taxa_mensal, self.total_meses
+        if i == 0: return self.valor / n
+        return self.valor * (i * (1 + i)**n) / ((1 + i)**n - 1)
 
-# Título e Logo
-st.title("🏠 Central do Corretor")
-st.subheader("Kelvin Eiyng | CRECI-SC 49891 F")
+    def dados_grafico(self):
+        parcela = self.calcular_parcela()
+        return pd.DataFrame({"Evolução": [parcela] * 12})
+
+# Configuração da interface e identidade visual
+st.set_page_config(page_title="Kelvin Eiyng - Inteligência Imobiliária", layout="centered")
+
+# Inicialização do estado da agenda para persistência de dados
+if 'agenda_contatos' not in st.session_state:
+    st.session_state.agenda_contatos = []
+
+# Identificação Profissional no Cabeçalho
+st.title("💼 Central Kelvin Pro")
+st.markdown(f"**Corretor:** Kelvin Eiyng | **CRECI-SC:** 49891 F")
 st.markdown("---")
 
-aba1, aba2 = st.tabs(["💬 Mensagens Isca", "📊 Simulador de Venda"])
+# Navegação por abas funcionais
+aba_simulador, aba_atendimento, aba_agenda = st.tabs([
+    "📊 Simulador", "🚀 Mensagens Rápidas", "🗓️ Agenda & Alarmes"
+])
 
-with aba1:
-    st.markdown("### 🚀 Enviar Mensagem Rápida")
-    st.markdown('<p class="instruction">Use estas frases curtas para fazer o cliente responder mais rápido.</p>', unsafe_allow_html=True)
+# Interface do Simulador Financeiro (Tabela PRICE)
+with aba_simulador:
+    st.subheader("Simulação de Financiamento")
+    v_imo = st.number_input("Valor do Imóvel (R$)", value=250000.0, step=1000.0)
+    j_anual = st.number_input("Taxa de Juros Anual (%)", value=10.5)
+    p_anos = st.slider("Prazo (Anos)", 1, 35, 20)
     
-    nome_cliente = st.text_input("Nome do Cliente", placeholder="Ex: João")
-    fone_cliente = st.text_input("WhatsApp com DDD", placeholder="Ex: 48984610091")
+    sistema = KelvinSistema(v_imo, j_anual, p_anos)
+    parcela = sistema.calcular_parcela()
     
-    st.markdown('<p class="instruction">Escolha o objetivo da conversa:</p>', unsafe_allow_html=True)
-    msg_tipo = st.selectbox("", [
-        "Saber se quer ver o vídeo do imóvel",
-        "Convidar para visita amanhã",
-        "Retomar contato (Follow-up)"
-    ])
+    st.metric("Parcela Mensal Estimada", f"R$ {parcela:,.2f}")
+    st.line_chart(sistema.dados_grafico())
+    st.caption("Nota: Valores simulados com base na tabela PRICE.")
 
-    textos = {
-        "Saber se quer ver o vídeo do imóvel": f"Oi {nome_cliente}, vi seu interesse no imóvel. Quer que eu te mande o vídeo completo dele agora?",
-        "Convidar para visita amanhã": f"Fala {nome_cliente}! Gostou das fotos? Tenho um horário livre amanhã. Que horas fica bom para você ver o imóvel?",
-        "Retomar contato (Follow-up)": f"Oi {nome_cliente}, tudo bem? Só passando para saber se ainda tem interesse ou se quer outras opções no mesmo perfil."
+# Interface de Atendimento Rápido com Assinatura Automática
+with aba_atendimento:
+    st.subheader("Gestão de Mensagens WhatsApp")
+    nome_cliente = st.text_input("Nome do Cliente:")
+    
+    # Assinatura padrão para todas as mensagens
+    assinatura = f"\n\nAtenciosamente,\nKelvin Eiyng\nCRECI-SC 49891 F"
+    
+    frases = {
+        "Boas vindas": f"Oi {nome_cliente}, vi que você chamou no Marketplace sobre o imóvel. Tudo bem? Como posso te ajudar?",
+        "Vídeo do Imóvel": f"Olá {nome_cliente}, separei um vídeo desse imóvel para você ver os detalhes. Posso te enviar por aqui?",
+        "Documentação": f"Oi {nome_cliente}, para avançarmos com a simulação bancária, você consegue me enviar sua renda bruta e CPF?"
     }
     
-    msg_final = textos[msg_tipo]
-    st.code(msg_final, language=None)
+    escolha = st.selectbox("Selecione o modelo de mensagem:", list(frases.keys()))
+    mensagem_final = frases[escolha] + assinatura
+    
+    st.info(f"**Visualização da Mensagem:**\n\n{mensagem_final}")
+    
+    # Formatação de link para abertura direta no WhatsApp
+    link_wa = f"https://wa.me/?text={mensagem_final.replace(' ', '%20').replace('\n', '%0A')}"
+    st.markdown(f"[📲 ENVIAR PARA O WHATSAPP]({link_wa})")
 
-    if st.button("🚀 ENVIAR PELO WHATSAPP"):
-        if fone_cliente:
-            texto_url = urllib.parse.quote(msg_final)
-            link = f"https://wa.me/55{fone_cliente}?text={texto_url}"
-            st.markdown(f'<a href="{link}" target="_blank" style="text-decoration:none;"><button style="width:100%; background-color:#25d366; color:white; border:none; padding:10px; border-radius:8px; cursor:pointer;">Confirmar e Abrir WhatsApp</button></a>', unsafe_allow_html=True)
-        else:
-            st.error("Por favor, digite o número do cliente.")
+# Gestão de compromissos e sistema de monitoramento de horários
+with aba_agenda:
+    st.subheader("Agenda de Leads e Retornos")
+    
+    with st.expander("➕ Agendar Novo Compromisso"):
+        cli = st.text_input("Nome do Lead")
+        h = st.time_input("Horário do Alarme")
+        status = st.selectbox("Prioridade Visual:", [
+            "🔴 URGENTE - Retorno Imediato", 
+            "🔵 VISITA - Agendada", 
+            "🟢 RETORNAR - Em aberto"
+        ])
+        if st.button("Salvar Compromisso"):
+            st.session_state.agenda_contatos.append({
+                "nome": cli, "hora": h, "cor": status, "avisado": False
+            })
+            st.success("Lembrete salvo com sucesso!")
 
-with aba2:
-    st.markdown("### 🧮 Simulação para o Cliente")
-    st.markdown('<p class="instruction">Use isto durante a visita para dar uma estimativa de parcelas.</p>', unsafe_allow_html=True)
-    
-    v_imovel = st.number_input("Valor do Imóvel (R$)", value=350000, step=50000)
-    v_entrada = st.number_input("Entrada disponível (R$)", value=70000, step=10000)
-    
-    saldo = v_imovel - v_entrada
-    st.write(f"**Valor a financiar:** R$ {saldo:,.2f}")
-    
-    prazo = st.select_slider("Prazo (Anos)", options=[10, 15, 20, 25, 30, 35], value=30)
-    
-    # Cálculo simples de prestação (Price aproximada)
-    juros = 0.009 # Aprox 10.5% ao ano
-    n = prazo * 12
-    parcela = saldo * ( (juros * (1 + juros)**n) / ((1 + juros)**n - 1) )
-    
-    st.metric("Parcela Estimada", f"R$ {parcela:,.2f}")
-    st.markdown('<p class="instruction">*Valores baseados em taxas médias de mercado. Sujeito a análise bancária.</p>', unsafe_allow_html=True)
+    # Monitoramento de horário para disparo de alertas visuais
+    hora_atual = datetime.now().time().strftime("%H:%M")
+    for item in st.session_state.agenda_contatos:
+        if item['hora'].strftime("%H:%M") == hora_atual and not item['avisado']:
+            st.toast(f"⏰ HORA DE FALAR COM: {item['nome']}", icon="🚨")
+            item['avisado'] = True
 
-st.markdown("---")
-st.caption("Sistema desenvolvido para Kelvin Eiyng - Villa Terra")
-   
-            
+    # Renderização da lista de Leads categorizada por cores
+    for i in st.session_state.agenda_contatos:
+        texto_item = f"{i['hora'].strftime('%H:%M')} - {i['nome']} ({i['cor']})"
+        if "🔴" in i['cor']: st.error(texto_item)
+        elif "🔵" in i['cor']: st.info(texto_item)
+        else: st.success(texto_item)
