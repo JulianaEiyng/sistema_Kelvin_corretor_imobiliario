@@ -1,62 +1,74 @@
 import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
 
-# Configuração da Página para parecer um App Móvel
-st.set_page_config(page_title="Kelvin Pro", layout="centered")
+# 1. Configuração de Estilo Profissional (CSS)
+st.set_page_config(page_title="Sistema Kelvin | Inteligência Imobiliária", layout="centered")
 
-# Estilo CSS para criar os cards idênticos às suas fotos
 st.markdown("""
     <style>
     .stApp { background-color: #f8f9fa; }
-    .header-app { background-color: #1e56a0; color: white; padding: 15px; border-radius: 0 0 15px 15px; text-align: center; margin:-50px -10px 20px -10px; }
-    .agenda-title { font-weight: bold; font-size: 18px; margin-bottom: 10px; display: flex; align-items: center; }
-    .card { border-radius: 12px; padding: 15px; margin-bottom: 12px; background: white; border: 2px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-    .card-urgente { border: 2px solid #ff4b4b; }
-    .card-visita { border: 2px solid #007bff; }
-    .card-retorno { border: 2px solid #28a745; }
-    .tag { font-weight: bold; font-size: 12px; }
-    .btn-whatsapp { background-color: #111; color: white; text-align: center; padding: 15px; border-radius: 30px; font-weight: bold; margin-top: 20px; cursor: pointer; display: block; text-decoration: none; }
+    .header-blue { background-color: #1e56a0; color: white; padding: 20px; border-radius: 5px; text-align: center; margin-bottom: 25px; font-weight: bold; font-size: 22px; }
+    .card-agenda { background: white; border-radius: 12px; padding: 18px; margin-bottom: 12px; border-left: 10px solid; box-shadow: 0px 4px 6px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .btn-whatsapp { background-color: #000000; color: white !important; text-align: center; padding: 15px; border-radius: 30px; font-weight: bold; text-decoration: none; display: block; margin-top: 20px; }
+    .tag-status { font-weight: bold; font-size: 11px; text-transform: uppercase; }
     </style>
     """, unsafe_allow_html=True)
 
-# Topo do Aplicativo
-st.markdown('<div class="header-app"><h2>🏠 Kelvin Pro</h2><p>Central do Corretor</p></div>', unsafe_allow_html=True)
+# 2. Cabeçalho
+st.markdown('<div class="header-blue">🏠 Sistema Kelvin | Inteligência Imobiliária</div>', unsafe_allow_html=True)
 
-tab1, tab2, tab3 = st.tabs(["🔹 Simulador", "🔹 Atendimento", "🔹 Minha Agenda"])
-
-with tab3:
-    st.markdown('<div class="agenda-title">📝 Minha Agenda</div>', unsafe_allow_html=True)
-    
-    # Card Urgente (Vermelho)
-    st.markdown("""
-    <div class="card card-urgente">
-        <div><b>14:49 - João Silva</b><br><span style="color:#ff4b4b" class="tag">● URGENTE</span></div>
-        <div style="color:#ff4b4b; font-size:24px;">⭕</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Card Visita (Azul)
-    st.markdown("""
-    <div class="card card-visita">
-        <div><b>15:30 - Maria Oliveira</b><br><span style="color:#007bff" class="tag">● VISITA</span></div>
-        <div style="color:#007bff; font-size:24px;">⭕</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Card Retorno (Verde)
-    st.markdown("""
-    <div class="card card-retorno">
-        <div><b>16:00 - Pedro Santos</b><br><span style="color:#28a745" class="tag">● RETORNAR</span></div>
-        <div style="color:#28a745; font-size:24px;">⭕</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Botão WhatsApp no estilo da foto
-st.markdown('<a href="#" class="btn-whatsapp">💬 ENVIAR AGORA PARA WHATSAPP</a>', unsafe_allow_html=True)
+# 3. Abas
+tab1, tab2, tab3 = st.tabs(["📊 Simulador", "🚀 Atendimento", "🗓️ Minha Agenda"])
 
 with tab1:
-    st.subheader("Simulador de Venda")
-    st.number_input("Valor do Imóvel", value=250000.0)
+    st.subheader("Simulador Comparativo: SAC vs PRICE")
+    col1, col2 = st.columns(2)
+    with col1:
+        v_imovel = st.number_input("Valor do Imóvel (R$)", value=250000.0)
+        juros = st.number_input("Juros Anual (%)", value=10.5)
+    with col2:
+        anos = st.slider("Anos", 1, 35, 20)
+    
+    # Cálculos para o Gráfico
+    n = anos * 12
+    i = (juros / 100) / 12
+    meses_eixo = np.arange(1, n + 1)
+    curva_price = [v_imovel * (i * (1+i)**n) / ((1+i)**n - 1) for _ in meses_eixo]
+    curva_sac = [(v_imovel/n) + (v_imovel - (m-1)*(v_imovel/n))*i for m in meses_eixo]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=meses_eixo, y=curva_price, name='PRICE', line=dict(color='#ff4b4b', width=3)))
+    fig.add_trace(go.Scatter(x=meses_eixo, y=curva_sac, name='SAC', line=dict(color='#1e56a0', width=3)))
+    fig.update_layout(title="Evolução das Parcelas", height=300, margin=dict(l=0,r=0,t=40,b=0))
+    st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
     st.subheader("Atendimento")
-    st.text_input("Nome do Cliente")
+    nome = st.text_input("Nome do Cliente")
+    if nome:
+        st.info(f"Proposta personalizada para {nome}")
+    st.markdown('<a href="#" class="btn-whatsapp">💬 ENVIAR AGORA PARA WHATSAPP</a>', unsafe_allow_html=True)
+
+with tab3:
+    st.markdown("### 🗓️ Minha Agenda")
+    
+    # Agenda idêntica à imagem
+    st.markdown("""
+    <div class="card-agenda" style="border-left-color: #ff4b4b;">
+        <div><b>14:49 - João Silva</b><br><span class="tag-status" style="color: #ff4b4b;">● URGENTE</span></div>
+        <div style="color: #ff4b4b; font-size: 20px;">⭕</div>
+    </div>
+    <div class="card-agenda" style="border-left-color: #007bff;">
+        <div><b>15:30 - Maria Oliveira</b><br><span class="tag-status" style="color: #007bff;">● VISITA</span></div>
+        <div style="color: #007bff; font-size: 20px;">⭕</div>
+    </div>
+    <div class="card-agenda" style="border-left-color: #28a745;">
+        <div><b>16:00 - Pedro Santos</b><br><span class="tag-status" style="color: #28a745;">● RETORNAR</span></div>
+        <div style="color: #28a745; font-size: 20px;">⭕</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.write("---")
+st.caption("Kelvin Eiyng | CRECI-SC: 49891 F")
