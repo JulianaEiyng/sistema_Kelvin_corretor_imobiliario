@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# Estrutura principal do sistema de cálculos financeiros
+# Classe para cálculos financeiros imobiliários
 class KelvinSistema:
     def __init__(self, valor, juros, prazo):
         self.valor = valor
@@ -18,24 +18,24 @@ class KelvinSistema:
         parcela = self.calcular_parcela()
         return pd.DataFrame({"Evolução": [parcela] * 12})
 
-# Configuração da interface e identidade visual
+# Configuração da página e identidade visual
 st.set_page_config(page_title="Kelvin Eiyng - Inteligência Imobiliária", layout="centered")
 
-# Inicialização do estado da agenda para persistência de dados
+# Estado da agenda para manter dados durante a sessão
 if 'agenda_contatos' not in st.session_state:
     st.session_state.agenda_contatos = []
 
-# Identificação Profissional no Cabeçalho
+# Cabeçalho Profissional
 st.title("💼 Central Kelvin Pro")
 st.markdown(f"**Corretor:** Kelvin Eiyng | **CRECI-SC:** 49891 F")
 st.markdown("---")
 
-# Navegação por abas funcionais
+# Organização por abas para uso em dispositivos móveis
 aba_simulador, aba_atendimento, aba_agenda = st.tabs([
     "📊 Simulador", "🚀 Mensagens Rápidas", "🗓️ Agenda & Alarmes"
 ])
 
-# Interface do Simulador Financeiro (Tabela PRICE)
+# 1. ABA DO SIMULADOR (Tabela PRICE)
 with aba_simulador:
     st.subheader("Simulação de Financiamento")
     v_imo = st.number_input("Valor do Imóvel (R$)", value=250000.0, step=1000.0)
@@ -47,14 +47,13 @@ with aba_simulador:
     
     st.metric("Parcela Mensal Estimada", f"R$ {parcela:,.2f}")
     st.line_chart(sistema.dados_grafico())
-    st.caption("Nota: Valores simulados com base na tabela PRICE.")
+    st.caption("Cálculo baseado no sistema de amortização PRICE.")
 
-# Interface de Atendimento Rápido com Assinatura Automática
+# 2. ABA DE ATENDIMENTO COM WHATSAPP
 with aba_atendimento:
-    st.subheader("Gestão de Mensagens WhatsApp")
+    st.subheader("Atendimento Rápido")
     nome_cliente = st.text_input("Nome do Cliente:")
     
-    # Assinatura padrão para todas as mensagens
     assinatura = f"\n\nAtenciosamente,\nKelvin Eiyng\nCRECI-SC 49891 F"
     
     frases = {
@@ -63,41 +62,41 @@ with aba_atendimento:
         "Documentação": f"Oi {nome_cliente}, para avançarmos com a simulação bancária, você consegue me enviar sua renda bruta e CPF?"
     }
     
-    escolha = st.selectbox("Selecione o modelo de mensagem:", list(frases.keys()))
+    escolha = st.selectbox("Selecione o modelo:", list(frases.keys()))
     mensagem_final = frases[escolha] + assinatura
     
-    st.info(f"**Visualização da Mensagem:**\n\n{mensagem_final}")
+    st.info(f"**Pré-visualização:**\n\n{mensagem_final}")
     
-    # Formatação de link para abertura direta no WhatsApp
+    # Formatação de link para WhatsApp
     link_wa = f"https://wa.me/?text={mensagem_final.replace(' ', '%20').replace('\n', '%0A')}"
     st.markdown(f"[📲 ENVIAR PARA O WHATSAPP]({link_wa})")
 
-# Gestão de compromissos e sistema de monitoramento de horários
+# 3. ABA DE AGENDA E ALERTAS
 with aba_agenda:
-    st.subheader("Agenda de Leads e Retornos")
+    st.subheader("Gestão de Compromissos")
     
-    with st.expander("➕ Agendar Novo Compromisso"):
+    with st.expander("➕ Novo Lembrete"):
         cli = st.text_input("Nome do Lead")
-        h = st.time_input("Horário do Alarme")
-        status = st.selectbox("Prioridade Visual:", [
-            "🔴 URGENTE - Retorno Imediato", 
+        h = st.time_input("Hora do Alarme")
+        status = st.selectbox("Status:", [
+            "🔴 URGENTE - Chamar agora", 
             "🔵 VISITA - Agendada", 
             "🟢 RETORNAR - Em aberto"
         ])
-        if st.button("Salvar Compromisso"):
+        if st.button("Salvar na Agenda"):
             st.session_state.agenda_contatos.append({
                 "nome": cli, "hora": h, "cor": status, "avisado": False
             })
-            st.success("Lembrete salvo com sucesso!")
+            st.success("Salvo!")
 
-    # Monitoramento de horário para disparo de alertas visuais
+    # Lógica de verificação de horário para alarme visual
     hora_atual = datetime.now().time().strftime("%H:%M")
     for item in st.session_state.agenda_contatos:
         if item['hora'].strftime("%H:%M") == hora_atual and not item['avisado']:
-            st.toast(f"⏰ HORA DE FALAR COM: {item['nome']}", icon="🚨")
+            st.toast(f"🚨 HORA DE FALAR COM: {item['nome']}", icon="⏰")
             item['avisado'] = True
 
-    # Renderização da lista de Leads categorizada por cores
+    # Exibição da lista de contatos
     for i in st.session_state.agenda_contatos:
         texto_item = f"{i['hora'].strftime('%H:%M')} - {i['nome']} ({i['cor']})"
         if "🔴" in i['cor']: st.error(texto_item)
