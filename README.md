@@ -7,18 +7,19 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 ## 📸 Demonstração do Sistema
 
 <div align="center">
-  <img src="assets/foto_calculadora.jpg" width="300px">
-  <img src="assets/foto_agenda.jpg" width="300px">
+  <img src="assets/NOME_DA_FOTO_1.jpg" width="250px" alt="Simulador Financeiro">
+  <img src="assets/NOME_DA_FOTO_2.jpg" width="250px" alt="Atendimento WhatsApp">
+  <img src="assets/NOME_DA_FOTO_3.jpg" width="250px" alt="Agenda Interativa">
 </div>
 
-*Legenda: Interface mobile-first focada em usabilidade no dia a dia do corretor.*
+*Legenda: Interface mobile-first otimizada para o dia a dia do corretor.*
 
 ---
 
 ## 🚀 Novas Funcionalidades
 
 * **Simulador Financeiro Profissional:** Comparativo detalhado entre as tabelas **SAC** e **PRICE**, permitindo que o cliente visualize a economia real em tempo real.
-* **Projeção de Parcelas e Vencimentos:** Exibição imediata do valor da 1ª parcela, última parcela e data do primeiro vencimento.
+* **Projeção de Parcelas e Vencimentos:** Exibição imediata do valor da 1ª parcela (SAC), parcela fixa (PRICE) e data do primeiro vencimento.
 * **Gestão de Agenda Interativa:** Sistema de marcação de visitas e compromissos com status de prioridade (Urgente, Visita, Retornar).
 * **Integração WhatsApp:** Automação de propostas personalizadas enviadas diretamente para o cliente com todos os dados da simulação.
 
@@ -28,14 +29,14 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 
 * **Python:** Lógica avançada para cálculos matemáticos financeiros.
 * **Streamlit:** Interface moderna e responsiva (Mobile First).
-* **Plotly:** Gráficos interativos para visualização da queda das parcelas na tabela SAC.
+* **Plotly:** Gráficos interativos para visualização da evolução das parcelas.
 * **Pandas/Numpy:** Tratamento de dados e projeções financeiras.
 
 ---
 
 ## 📈 Impacto no Negócio
 
-O sistema elimina a necessidade de planilhas complexas ou o uso de notebooks durante o atendimento, permitindo que o corretor entregue uma consultoria financeira completa na palma da mão.
+O sistema elimina a necessidade de planilhas complexas ou o uso de notebooks durante o atendimento, permitindo que o corretor entregue uma consultoria financeira completa na palma da mão, aumentando a confiança do cliente e a velocidade de conversão.
 
 ---
-🔗 **Link do Projeto:** [Acesse aqui](https://kelvin-eiyng.streamlit.app)
+🔗 **Link do Projeto:** [Acesse a Ferramenta Aqui](https://kelvin-eiyng.streamlit.app)
