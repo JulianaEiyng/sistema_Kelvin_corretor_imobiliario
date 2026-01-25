@@ -7,9 +7,9 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 ## 📸 Demonstração do Sistema
 
 <div align="center">
-  <img src="assets/NOME_DA_FOTO_1.jpg" width="250px" alt="Simulador Financeiro">
-  <img src="assets/NOME_DA_FOTO_2.jpg" width="250px" alt="Atendimento WhatsApp">
-  <img src="assets/NOME_DA_FOTO_3.jpg" width="250px" alt="Agenda Interativa">
+  <img src="assets/simulador.jpg.jpeg" width="250px" alt="Simulador Financeiro">
+  <img src="assets/atendimento.jpg.jpeg" width="250px" alt="Atendimento WhatsApp">
+  <img src="assets/agenda.jpg.jpeg" width="250px" alt="Agenda Interativa">
 </div>
 
 *Legenda: Interface mobile-first otimizada para o dia a dia do corretor.*
