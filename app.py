@@ -47,7 +47,7 @@ with tab1:
     p_u_sac = amort + (amort * i)
     total_sac = (p1_sac + p_u_sac) * n / 2
 
-    # --- DESTAQUE DE VALORES (O QUE VOCÊ PEDIU) ---
+    # --- DESTAQUE DE VALORES ---
     st.write("### 🏠 Resumo do Financiamento")
     c1, c2, c3 = st.columns(3)
     with c1:
