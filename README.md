@@ -1,16 +1,14 @@
-# 🏠 Central do Corretor - MVP
-
-Este projeto é uma ferramenta de produtividade desenvolvida sob medida para um corretor de imóveis, com o objetivo de agilizar o primeiro contato com clientes e organizar modelos de atendimento.
-
-### 🚀 Funcionalidades
-* **Mensagens Isca:** Automação de modelos de texto personalizados que são enviados diretamente para o WhatsApp do cliente.
-* **Personalização Dinâmica:** O sistema formata a mensagem incluindo o nome do cliente e o objetivo da conversa automaticamente.
-* **Simulador de Venda:** Espaço dedicado para cálculos rápidos e suporte à tomada de decisão durante o atendimento.
-
-### 🛠️ Tecnologias Utilizadas
-* **Python:** Linguagem principal para a lógica de back-end.
-* **Streamlit:** Framework utilizado para a criação da interface web e deploy.
-* **GitHub:** Versionamento de código e hospedagem do projeto.
-
-### 📈 Contexto do Projeto
-Este software nasceu como um **MVP (Minimum Viable Product)** para resolver uma dor real de produtividade no mercado imobiliário. Através do uso diário, o projeto está gerando aprendizados que guiarão as próximas atualizações e melhorias de UX.
+🏠 Central do Corretor - Kelvin Eiyng (Versão 2.0)
+Este projeto evoluiu de um MVP para uma plataforma completa de produtividade voltada ao mercado imobiliário. Desenvolvida sob medida para o corretor Kelvin Eiyng, a ferramenta foca em transparência financeira e agilidade no fechamento de negócios.
+🚀 Novas Funcionalidades
+• Simulador Financeiro Profissional: Comparativo detalhado entre as tabelas SAC e PRICE, permitindo que o cliente visualize a economia real em tempo real.
+• Projeção de Parcelas e Vencimentos: Exibição imediata do valor da 1ª parcela, última parcela e data do primeiro vencimento.
+• Gestão de Agenda Interativa: Sistema de marcação de visitas e compromissos com status de prioridade (Urgente, Visita, Retornar).
+• Integração WhatsApp: Automação de propostas personalizadas enviadas diretamente para o cliente com todos os dados da simulação.
+🛠️ Tecnologias Utilizadas
+• Python: Lógica avançada para cálculos matemáticos financeiros.
+• Streamlit: Interface moderna e responsiva (Mobile First).
+• Plotly: Gráficos interativos para visualização da queda das parcelas na tabela SAC.
+• Pandas/Numpy: Tratamento de dados e projeções financeiras.
+📈 Impacto no Negócio
+O sistema elimina a necessidade de planilhas complexas ou o uso de notebooks durante o atendimento, permitindo que o corretor entregue uma consultoria financeira completa na palma da mão, aumentando a confiança do cliente e a velocidade de conversão.
