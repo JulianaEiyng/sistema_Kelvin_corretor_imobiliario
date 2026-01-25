@@ -4,6 +4,17 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 
 ---
 
+## 📸 Demonstração do Sistema
+
+<div align="center">
+  <img src="assets/foto_calculadora.jpg" width="300px">
+  <img src="assets/foto_agenda.jpg" width="300px">
+</div>
+
+*Legenda: Interface mobile-first focada em usabilidade no dia a dia do corretor.*
+
+---
+
 ## 🚀 Novas Funcionalidades
 
 * **Simulador Financeiro Profissional:** Comparativo detalhado entre as tabelas **SAC** e **PRICE**, permitindo que o cliente visualize a economia real em tempo real.
@@ -24,7 +35,7 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 
 ## 📈 Impacto no Negócio
 
-O sistema elimina a necessidade de planilhas complexas ou o uso de notebooks durante o atendimento, permitindo que o corretor entregue uma consultoria financeira completa na palma da mão, aumentando a confiança do cliente e a velocidade de conversão.
+O sistema elimina a necessidade de planilhas complexas ou o uso de notebooks durante o atendimento, permitindo que o corretor entregue uma consultoria financeira completa na palma da mão.
 
 ---
 🔗 **Link do Projeto:** [Acesse aqui](https://kelvin-eiyng.streamlit.app)
