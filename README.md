@@ -1,10 +1,10 @@
-# 🏠 Central do Corretor - Kelvin Eiyng (Versão 2.0)
+# Central do Corretor - Kelvin Eiyng (Versão 2.0)
 
 Este projeto evoluiu de um MVP para uma plataforma completa de produtividade voltada ao mercado imobiliário. Desenvolvida sob medida para o corretor **Kelvin Eiyng**, a ferramenta foca em transparência financeira e agilidade no fechamento de negócios.
 
 ---
 
-## 📸 Demonstração do Sistema
+## Demonstração do Sistema
 
 <div align="center">
   <img src="assets/simulador.jpg.jpeg" width="250px" alt="Simulador Financeiro">
@@ -16,7 +16,7 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 
 ---
 
-## 🚀 Novas Funcionalidades
+## Novas Funcionalidades
 
 * **Simulador Financeiro Profissional:** Comparativo detalhado entre as tabelas **SAC** e **PRICE**, permitindo que o cliente visualize a economia real em tempo real.
 * **Projeção de Parcelas e Vencimentos:** Exibição imediata do valor da 1ª parcela (SAC), parcela fixa (PRICE) e data do primeiro vencimento.
