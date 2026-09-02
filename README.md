@@ -1,4 +1,4 @@
-# Central do Corretor - Kelvin Eiyng (Versão 2.0)
+# Central do Corretor - Kelvin Eiyng 
 
 Este projeto evoluiu de um MVP para uma plataforma completa de produtividade voltada ao mercado imobiliário. Desenvolvida sob medida para o corretor **Kelvin Eiyng**, a ferramenta foca em transparência financeira e agilidade no fechamento de negócios.
 
