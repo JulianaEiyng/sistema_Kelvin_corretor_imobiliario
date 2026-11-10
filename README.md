@@ -25,7 +25,7 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 * **Python:** Lógica avançada para cálculos matemáticos financeiros.
 * **Streamlit:** Interface moderna e responsiva (Mobile First).
@@ -34,7 +34,7 @@ Este projeto evoluiu de um MVP para uma plataforma completa de produtividade vol
 
 ---
 
-## 📈 Impacto no Negócio
+##  Impacto no Negócio
 
 O sistema elimina a necessidade de planilhas complexas ou o uso de notebooks durante o atendimento, permitindo que o corretor entregue uma consultoria financeira completa na palma da mão, aumentando a confiança do cliente e a velocidade de conversão.
 
